@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Graduate Career Analytics</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+</head>
+
+<body>
+
+  <section class="hero" id="hero">
+
+    <div class="hero-badge">
+      Graduate Career Analytics
+    </div>
+
+    <h1>
+      Dashboard Visualisasi Data Analisis Ketenagakerjaan
+    </h1>
+
+    <p>
+      Jelajahi hubungan antara pendidikan, GPA, kemampuan bahasa,
+      status pekerjaan, dan gaji lulusan melalui visualisasi interaktif.
+    </p>
+
+    <div class="question-box">
+
+      <div class="question-card" onclick="showSection('salary')">
+        <div class="question-icon">💰</div>
+        <h3>Analisis Gaji</h3>
+        <p>Sektor pekerjaan dengan rata-rata gaji tertinggi.</p>
+      </div>
+
+      <div class="question-card" onclick="showSection('unemployment')">
+        <div class="question-icon">🎓</div>
+        <h3>Pengangguran</h3>
+        <p>Tingkat pengangguran berdasarkan jurusan dan pendidikan.</p>
+      </div>
+
+      <div class="question-card" onclick="showSection('gpaJob')">
+        <div class="question-icon">📊</div>
+        <h3>GPA & Ranking</h3>
+        <p>Hubungan GPA dan ranking universitas dengan status pekerjaan.</p>
+      </div>
+
+      <div class="question-card" onclick="showSection('ageStatus')">
+        <div class="question-icon">👥</div>
+        <h3>Umur & Status Kerja</h3>
+        <p>Pengaruh rentang umur terhadap status pekerjaan lulusan.</p>
+      </div>
+
+      <div class="question-card" onclick="showSection('gpaBox')">
+        <div class="question-icon">🏫</div>
+        <h3>Distribusi GPA</h3>
+        <p>Distribusi GPA berdasarkan ranking universitas dan pendidikan.</p>
+      </div>
+
+      <div class="question-card" onclick="showSection('languageGpa')">
+        <div class="question-icon">🌐</div>
+        <h3>Bahasa & GPA</h3>
+        <p>Hubungan kemampuan bahasa dengan GPA mahasiswa.</p>
+      </div>
+
+      <div class="question-card" onclick="showSection('salaryFactor')">
+        <div class="question-icon">🔥</div>
+        <h3>Faktor Salary</h3>
+        <p>Aspek yang paling berkaitan dengan range salary.</p>
+      </div>
+
+      <div class="question-card" onclick="showSection('fieldJob')">
+        <div class="question-icon">🧩</div>
+        <h3>Jurusan & Pekerjaan</h3>
+        <p>Kesesuaian bidang kuliah dengan sektor pekerjaan setelah lulus.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="dashboard" id="dashboard">
+
+    <button class="back-btn" onclick="backToMenu()">
+      ← Kembali ke Menu
+    </button>
+
+
+    <div class="chart-section" id="salarySection">
+      <div class="card">
+        <h2>Rata-rata Gaji Berdasarkan Sektor Pekerjaan</h2>
+
+        <div class="controls">
+          Urutkan:
+          <select id="sortSalary">
+            <option value="desc">Tertinggi ke Terendah</option>
+            <option value="asc">Terendah ke Tertinggi</option>
+          </select>
+        </div>
+
+        <svg id="salaryChart"></svg>
+      </div>
+    </div>
+
+
+    <div class="chart-section" id="unemploymentSection">
+      <div class="card">
+        <h2>Tingkat Pengangguran Berdasarkan Jurusan dan Pendidikan</h2>
+
+        <p class="chart-desc">
+          Visualisasi ini menunjukkan perbandingan tingkat pengangguran
+          berdasarkan Field of Study dan Education Level.
+        </p>
+
+        <svg id="unemploymentChart"></svg>
+      </div>
+    </div>
+
+
+    <div class="chart-section" id="gpaJobSection">
+      <div class="card">
+        <h2>Hubungan GPA dan Ranking Universitas dengan Status Pekerjaan</h2>
+
+        <p class="chart-desc">
+          Setiap titik menunjukkan lulusan berdasarkan GPA,
+          ranking universitas, dan status pekerjaan.
+        </p>
+
+        <svg id="gpaJobChart"></svg>
+      </div>
+    </div>
+
+
+    <div class="chart-section" id="ageStatusSection">
+      <div class="card">
+        <h2>Status Kerja Berdasarkan Rentang Umur</h2>
+
+        <p class="chart-desc">
+          Stacked bar chart digunakan untuk melihat proporsi bekerja
+          dan pengangguran pada setiap rentang umur.
+        </p>
+
+        <svg id="ageStatusChart"></svg>
+      </div>
+    </div>
+
+
+    <div class="chart-section" id="gpaBoxSection">
+      <div class="card">
+        <h2>Distribusi GPA Berdasarkan Ranking Universitas dan Pendidikan</h2>
+
+        <p class="chart-desc">
+          Box plot digunakan untuk melihat sebaran GPA berdasarkan
+          kategori ranking universitas.
+        </p>
+
+        <svg id="gpaBoxChart"></svg>
+      </div>
+    </div>
+
+
+    <div class="chart-section" id="languageGpaSection">
+      <div class="card">
+        <h2>Hubungan Language Proficiency dengan GPA</h2>
+
+        <p class="chart-desc">
+          Scatter plot digunakan untuk melihat hubungan kemampuan bahasa
+          dengan GPA.
+        </p>
+
+        <svg id="languageGpaChart"></svg>
+      </div>
+    </div>
+
+
+    <div class="chart-section" id="salaryFactorSection">
+      <div class="card">
+        <h2>Korelasi Faktor dengan Salary Range</h2>
+
+        <p class="chart-desc">
+          Heatmap ini menunjukkan faktor yang paling berkaitan
+          dengan range salary.
+        </p>
+
+        <svg id="salaryFactorChart"></svg>
+      </div>
+    </div>
+
+
+    <div class="chart-section" id="fieldJobSection">
+      <div class="card">
+        <h2>Kesesuaian Field of Study dengan Job Sector</h2>
+
+        <p class="chart-desc">
+          Heatmap digunakan untuk melihat apakah jurusan kuliah
+          sejalan dengan sektor pekerjaan.
+        </p>
+
+        <svg id="fieldJobChart"></svg>
+      </div>
+    </div>
+
+  </section>
+
+
+  <div class="tooltip" id="tooltip"></div>
+
+
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/navigation.js"></script>
+
+  <script src="js/salary.js"></script>
+  <script src="js/unemployment.js"></script>
+  <script src="js/gpa-job.js"></script>
+  <script src="js/age-status.js"></script>
+  <script src="js/gpa-box.js"></script>
+  <script src="js/lang-gpa.js"></script>
+  <script src="js/salary-fact.js"></script>
+  <script src="js/field-job.js"></script>
+
+  <script src="js/main.js"></script>
+
+</body>
+</html>
